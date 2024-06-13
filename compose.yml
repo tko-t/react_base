@@ -1,0 +1,20 @@
+services:
+  react:
+    build:
+      context: .
+      args:
+        - "NODE_VER=${NODE_VER:-22.2.0}"
+        - "APP_NAME=${APP_NAME}"
+        - "WORKDIR=/${APP_NAME}"
+        - "USER=${APP_USER:-node}"
+        - "USER_ID=${APP_USER_ID:-1000}"
+        - "GROUP=${APP_GROUP:-node}"
+        - "GROUP_ID=${APP_GROUP_ID:-1000}"
+    user: "${APP_USER_ID:-10000}:${APP_GROUP_ID:-1000}"
+    tty: true
+    volumes:
+      - "./:/${APP_NAME}:cached"
+    command: npm start
+    ports:
+      - "${PORT:-3000}:3000"
+
